@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -64,7 +65,7 @@ public class HomeWorkTestNG {
         driver.findElement(By.xpath("//input[@id='ShipToSameAddress']")).click();
         driver.findElement(By.xpath("//input[@id='BillingNewAddress_FirstName']")).sendKeys("John");
         driver.findElement(By.xpath("//input[@id='BillingNewAddress_LastName']")).sendKeys("Somert");
-        driver.findElement(By.xpath("//input[@id='BillingNewAddress_Email']")).sendKeys("john16@gmail.com");
+        driver.findElement(By.xpath("//input[@id='BillingNewAddress_Email']")).sendKeys("john169@gmail.com");
         driver.findElement(By.xpath("//input[@id='BillingNewAddress_Company']")).sendKeys("Sitcom");
         driver.findElement(By.xpath("//select[@data-val-required= 'Country is required.']")).sendKeys("United Kingdom");
         driver.findElement(By.xpath("//select[@data-trigger= 'state-select']")).sendKeys("Other");
@@ -83,20 +84,26 @@ public class HomeWorkTestNG {
         //driver.findElement(By.xpath("//*[@id=\"shipping-methods-form\"]/ul/li[1]/div[1]/label")).click();
         driver.findElement(By.xpath("//*[@id=\"shipping-buttons-container\"]/button[4]")).click();
        // driver.findElement(By.xpath("//*[@id=\"shippingoption_0\"]")).click();
+        Thread.sleep(3000);
         driver.findElement(By.xpath("//button[@type= 'button' and @onclick= 'ShippingMethod.save()']")).click();
         Thread.sleep(2000);
+
     }
     @Test(priority = 7)
     void paymentMethod() throws InterruptedException {
         System.out.println("Selected Payment Method");
-        driver.findElement(By.xpath("//input[@id= 'paymentmethod_1']")).click();
-        driver.findElement(By.xpath("//button[@class= 'button-1 payment-method-next-step-button']")).click();
+        WebElement radio = driver.findElement(By.xpath("//input[@id= 'paymentmethod_1']"));
+        radio.click();
         Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"payment-method-buttons-container\"]/button")).click();
+
     }
     @Test(priority = 8)
     void paymentInfo() throws InterruptedException {
         System.out.println("Payment information entered");
-        driver.findElement(By.xpath("//select[@id= 'CreditCardType']")).sendKeys("Visa");
+        Thread.sleep(2000);
+        Select select =  new Select(driver.findElement(By.xpath("//*[@id=\"CreditCardType\"]")));
+        select.selectByValue("MasterCard");
         driver.findElement(By.xpath("//input[@data-val-required= 'Enter cardholder name']")).sendKeys("John Somert");
         driver.findElement(By.xpath("//input[@id= 'CardNumber']")).sendKeys("2589 565 5566 5555");
         driver.findElement(By.xpath("//select[@id= 'ExpireMonth']")).sendKeys("04");
@@ -109,5 +116,5 @@ public class HomeWorkTestNG {
     void closeBrowser(){
         System.out.println("Close Browser");
         driver.close();
-    }
+   }
 }
